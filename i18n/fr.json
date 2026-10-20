@@ -1,8 +1,8 @@
 {
 	"@metadata": { "authors": [ "La Plume à Loup" ] },
-	"communecter-import-desc": "Importe les événements de tiers-lieux.org (Communecter) sous forme de pages wiki.",
-	"communecterimport": "Importer depuis tiers-lieux.org",
-	"right-communecter-import": "Importer des pages depuis tiers-lieux.org",
+	"communecter-import-desc": "Importe les événements du logiciel communecter sous forme de pages wiki.",
+	"communecterimport": "Importer depuis le logiciel communecter",
+	"right-communecter-import": "Importer des pages depuis le logiciel communecter",
 	"communecter-import-no-sites": "Aucun site configuré. Ajoutez dans <code>LocalSettings.php</code> : <code>$wgCommunecterImportSites = [ 'https://www.tiers-lieux.org', 'https://extremedefi.00.re' ];</code>",
 	"communecter-import-site": "Site :",
 	"communecter-import-slug": "Identifiant de l'organisateur (profil) :",
@@ -22,9 +22,9 @@
 	"communecter-import-error-invalid-slug": "Identifiant de profil invalide.",
 	"communecter-import-error-unknown-slug": "Aucun profil ne porte cet identifiant.",
 	"communecter-import-error-invalid-id": "Identifiant d'événement invalide.",
-	"communecter-import-error-event-not-found": "Événement introuvable sur tiers-lieux.org.",
-	"communecter-import-error-unreachable": "tiers-lieux.org est injoignable.",
-	"communecter-import-error-bad-response": "Réponse inattendue de tiers-lieux.org.",
+	"communecter-import-error-event-not-found": "Événement introuvable sur communecter.",
+	"communecter-import-error-unreachable": "Communecter est injoignable.",
+	"communecter-import-error-bad-response": "Réponse inattendue de communecter.",
 	"communecter-import-error-invalid-title": "Le titre de page déduit de l'événement est invalide.",
 	"communecter-import-error-save-failed": "L'enregistrement de la page a échoué."
 }

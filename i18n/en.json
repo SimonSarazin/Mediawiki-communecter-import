@@ -1,8 +1,8 @@
 {
 	"@metadata": { "authors": [ "La Plume à Loup" ] },
-	"communecter-import-desc": "Imports tiers-lieux.org (Communecter) events as wiki pages.",
-	"communecterimport": "Import from tiers-lieux.org",
-	"right-communecter-import": "Import pages from tiers-lieux.org",
+	"communecter-import-desc": "Imports Communecter software events as wiki pages.",
+	"communecterimport": "Import from the Communecter software",
+	"right-communecter-import": "Import pages from the Communecter software",
 	"communecter-import-no-sites": "No site configured. Add to <code>LocalSettings.php</code>: <code>$wgCommunecterImportSites = [ 'https://www.tiers-lieux.org', 'https://extremedefi.00.re' ];</code>",
 	"communecter-import-site": "Site:",
 	"communecter-import-slug": "Organizer identifier (profile):",
@@ -22,9 +22,9 @@
 	"communecter-import-error-invalid-slug": "Invalid third-place identifier.",
 	"communecter-import-error-unknown-slug": "No third place has this identifier.",
 	"communecter-import-error-invalid-id": "Invalid event identifier.",
-	"communecter-import-error-event-not-found": "Event not found on tiers-lieux.org.",
-	"communecter-import-error-unreachable": "tiers-lieux.org is unreachable.",
-	"communecter-import-error-bad-response": "Unexpected response from tiers-lieux.org.",
+	"communecter-import-error-event-not-found": "Event not found on Communecter.",
+	"communecter-import-error-unreachable": "Communecter is unreachable.",
+	"communecter-import-error-bad-response": "Unexpected response from Communecter.",
 	"communecter-import-error-invalid-title": "The page title derived from the event is invalid.",
 	"communecter-import-error-save-failed": "Saving the page failed."
 }

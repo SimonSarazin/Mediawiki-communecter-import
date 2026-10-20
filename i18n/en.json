@@ -4,7 +4,7 @@
 	"communecterimport": "Import from tiers-lieux.org",
 	"right-communecter-import": "Import pages from tiers-lieux.org",
 	"communecter-import-site": "Site:",
-	"communecter-import-slug": "Third-place identifier (slug):",
+	"communecter-import-slug": "Organizer identifier (profile):",
 	"communecter-import-list": "List events",
 	"communecter-import-show-past": "Also show past events",
 	"communecter-import-col-name": "Event",

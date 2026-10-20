@@ -42,13 +42,12 @@ class SpecialCommunecterImport extends SpecialPage {
 		$request = $this->getRequest();
 		$out->addModuleStyles( [ 'mediawiki.ui.button' ] );
 
-		$sites = $this->sites();
-		$site = $request->getVal( 'site', $sites[0] );
-		if ( !in_array( $site, $sites, true ) ) {
-			$site = $sites[0];
+		$site = self::normalizeSite( $request->getText( 'site', (string)$this->config->get( 'CommunecterImportSiteUrl' ) ) );
+		if ( $site === '' ) {
+			$site = self::normalizeSite( (string)$this->config->get( 'CommunecterImportSiteUrl' ) );
 		}
 		$slug = trim( $request->getText( 'slug', (string)$this->config->get( 'CommunecterImportDefaultSlug' ) ) );
-		$out->addHTML( $this->searchForm( $slug, $site, $sites ) );
+		$out->addHTML( $this->searchForm( $slug, $site ) );
 		if ( $slug === '' ) {
 			return;
 		}
@@ -72,34 +71,25 @@ class SpecialCommunecterImport extends SpecialPage {
 		return 'pagetools';
 	}
 
-	/** Sites publics autorisés : le premier est celui par défaut. */
-	private function sites(): array {
-		$list = array_merge(
-			[ (string)$this->config->get( 'CommunecterImportSiteUrl' ) ],
-			(array)$this->config->get( 'CommunecterImportSites' )
-		);
-		$clean = [];
-		foreach ( $list as $url ) {
-			$url = rtrim( (string)$url, '/' );
-			if ( preg_match( '#^https://[A-Za-z0-9.-]+(:\d+)?$#', $url ) ) {
-				$clean[] = $url;
-			}
+	/** Normalise la saisie libre (« tiers-lieux.org », « https://x.fr/ ») en https://domaine, ou '' si invalide. */
+	public static function normalizeSite( string $input ): string {
+		$host = strtolower( trim( $input ) );
+		$host = preg_replace( '#^https?://#', '', $host );
+		$host = rtrim( explode( '/', $host )[0], '.' );
+		if ( !preg_match( '/^(?=.{1,253}$)([a-z0-9-]+\.)+[a-z]{2,}(:\d{1,5})?$/', $host ) ) {
+			return '';
 		}
-		return array_values( array_unique( $clean ) ) ?: [ 'https://www.tiers-lieux.org' ];
+		return 'https://' . $host;
 	}
 
-	private function siteSelect( string $site, array $sites ): string {
-		$options = '';
-		foreach ( $sites as $url ) {
-			$options .= Html::element( 'option', [ 'value' => $url, 'selected' => $url === $site ], $url );
-		}
-		return Html::rawElement( 'select', [ 'name' => 'site', 'id' => 'cmi-site' ], $options );
-	}
-
-	private function searchForm( string $slug, string $site, array $sites ): string {
+	private function searchForm( string $slug, string $site ): string {
 		return Html::rawElement( 'form', [ 'method' => 'get', 'action' => $this->getPageTitle()->getLocalURL() ],
 			Html::element( 'label', [ 'for' => 'cmi-site' ], $this->msg( 'communecter-import-site' )->text() ) . ' ' .
-			$this->siteSelect( $site, $sites ) . ' ' .
+			Html::input( 'site', preg_replace( '#^https://#', '', $site ), 'text', [
+				'id' => 'cmi-site', 'size' => 28, 'list' => 'cmi-sites', 'placeholder' => 'tiers-lieux.org',
+			] ) . Html::rawElement( 'datalist', [ 'id' => 'cmi-sites' ],
+				Html::element( 'option', [ 'value' => 'tiers-lieux.org' ] ) .
+				Html::element( 'option', [ 'value' => 'extremedefi.00.re' ] ) ) . ' ' .
 			Html::element( 'label', [ 'for' => 'cmi-slug' ], $this->msg( 'communecter-import-slug' )->text() ) . ' ' .
 			Html::input( 'slug', $slug, 'text', [ 'id' => 'cmi-slug', 'size' => 30, 'placeholder' => 'laPlumeALoup' ] ) . ' ' .
 			Html::check( 'past', $this->getRequest()->getBool( 'past' ), [ 'id' => 'cmi-past' ] ) . ' ' .

@@ -15,7 +15,7 @@ saisir le slug (ex. `laPlumeALoup`), cocher les événements, importer.
 Les pages existantes ne sont modifiées que si l'option est cochée (le compte-rendu est conservé).
 
 ## Configuration
-`$wgCommunecterImportBaseUrl`, `SiteUrl` (site par défaut), `Sites` (liste d'autres domaines proposés dans le formulaire, ex. `[ 'https://extremedefi.00.re' ]`), `Template`, `DefaultSlug`, `ImportImages`, `UserAgent`, `Timeout`.
+`$wgCommunecterImportBaseUrl`, `SiteUrl` (site par défaut ; le champ « Site » du formulaire est libre : `tiers-lieux.org`, `extremedefi.00.re`…),  `Template`, `DefaultSlug`, `ImportImages`, `UserAgent`, `Timeout`.
 Les images WebP sont converties en JPEG (GD) si `$wgFileExtensions` ne les autorise pas.
 
 ## État

@@ -1,0 +1,62 @@
+{
+	"name": "CommunecterImport",
+	"version": "0.1.0",
+	"author": [ "La Plume à Loup" ],
+	"url": "https://github.com/SimonSarazin/mediawiki-communecter-import",
+	"descriptionmsg": "communecter-import-desc",
+	"license-name": "GPL-2.0-or-later",
+	"type": "specialpage",
+	"requires": {
+		"MediaWiki": ">= 1.39.0"
+	},
+	"AvailableRights": [ "communecter-import" ],
+	"GroupPermissions": {
+		"sysop": { "communecter-import": true }
+	},
+	"SpecialPages": {
+		"CommunecterImport": {
+			"class": "MediaWiki\\Extension\\CommunecterImport\\Special\\SpecialCommunecterImport",
+			"services": [ "HttpRequestFactory", "WikiPageFactory", "RepoGroup", "MainConfig" ]
+		}
+	},
+	"AutoloadNamespaces": {
+		"MediaWiki\\Extension\\CommunecterImport\\": "includes/"
+	},
+	"MessagesDirs": {
+		"CommunecterImport": [ "i18n" ]
+	},
+	"ExtensionMessagesFiles": {
+		"CommunecterImportAlias": "CommunecterImport.alias.php"
+	},
+	"config": {
+		"CommunecterImportBaseUrl": {
+			"value": "https://www.communecter.org",
+			"description": "API Communecter (backend de tiers-lieux.org), sans slash final."
+		},
+		"CommunecterImportSiteUrl": {
+			"value": "https://www.tiers-lieux.org",
+			"description": "Site public, utilisé pour le lien vers la fiche de l'événement."
+		},
+		"CommunecterImportTemplate": {
+			"value": "Evenement",
+			"description": "Nom du modèle (sans « Modèle: »). `Evenement` ou `Event` : les paramètres sont adaptés."
+		},
+		"CommunecterImportDefaultSlug": {
+			"value": "",
+			"description": "Slug du tiers-lieu proposé par défaut (ex. laPlumeALoup)."
+		},
+		"CommunecterImportImportImages": {
+			"value": true,
+			"description": "Téléverser l'image de l'événement sur le wiki."
+		},
+		"CommunecterImportUserAgent": {
+			"value": "MediaWiki-CommunecterImport/0.1",
+			"description": "User-Agent des requêtes vers Communecter."
+		},
+		"CommunecterImportTimeout": {
+			"value": 15,
+			"description": "Délai maximal d'une requête, en secondes."
+		}
+	},
+	"manifest_version": 2
+}

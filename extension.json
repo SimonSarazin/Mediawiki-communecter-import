@@ -43,7 +43,7 @@
 		},
 		"CommunecterImportTemplate": {
 			"value": "Evenement",
-			"description": "Nom du modèle (sans « Modèle: »). `Evenement` ou `Event` : les paramètres sont adaptés."
+			"description": "Modèle utilisé pour les pages événement : `Evenement` (movilab.org) ou `Event` (ex. wiki.lafabriquedesmobilites.fr, extremedefi). « Modèle: » est accepté. Les paramètres sont adaptés au modèle."
 		},
 		"CommunecterImportDefaultSlug": {
 			"value": "",

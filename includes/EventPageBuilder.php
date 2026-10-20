@@ -60,7 +60,8 @@ class EventPageBuilder {
 	 * @param array $options template (nom du modèle), image (nom du fichier téléversé), ficheUrl
 	 */
 	public static function build( array $evt, array $options = [] ): string {
-		$template = $options['template'] ?? 'Evenement';
+		// Accepte « Event », « Modèle:Event » ou « Template:Event ».
+		$template = trim( preg_replace( '/^(mod[èe]le|template)\s*:/iu', '', trim( (string)( $options['template'] ?? 'Evenement' ) ) ) ) ?: 'Evenement';
 		$image = $options['image'] ?? '';
 		$ficheUrl = $options['ficheUrl'] ?? '';
 

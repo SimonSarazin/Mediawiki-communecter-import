@@ -7,7 +7,7 @@ une page wiki par événement, avec image et description.
 Copier le dossier dans `extensions/CommunecterImport`, puis dans `LocalSettings.php` :
 
     wfLoadExtension( 'CommunecterImport' );
-    $wgCommunecterImportTemplate = 'Evenement'; // ou 'Event'
+    $wgCommunecterImportTemplate = 'Event'; // ou 'Evenement' (« Modèle:Event » accepté)
 
 ## Usage
 `Spécial:ImportCommunecter` (droit `communecter-import`, accordé aux sysops) :

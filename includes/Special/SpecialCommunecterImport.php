@@ -47,6 +47,10 @@ class SpecialCommunecterImport extends SpecialPage {
 			$out->addHTML( Html::errorBox( $this->msg( 'communecter-import-no-sites' )->parse() ) );
 			return;
 		}
+		if ( trim( (string)$this->config->get( 'CommunecterImportTemplate' ) ) === '' ) {
+			$out->addHTML( Html::errorBox( $this->msg( 'communecter-import-no-template' )->parse() ) );
+			return;
+		}
 		$site = self::normalizeSite( $request->getText( 'site', $sites[0] ) ) ?: $sites[0];
 		$slug = trim( $request->getText( 'slug', (string)$this->config->get( 'CommunecterImportDefaultSlug' ) ) );
 		$out->addHTML( $this->searchForm( $slug, $site, $sites ) );

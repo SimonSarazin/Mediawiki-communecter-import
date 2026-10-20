@@ -42,8 +42,8 @@
 			"description": "Sites publics proposés dans le formulaire (ex. [ \"https://www.tiers-lieux.org\", \"https://extremedefi.00.re\" ]). Le premier est le site par défaut. Obligatoire : sans valeur, la page demande de la configurer."
 		},
 		"CommunecterImportTemplate": {
-			"value": "Evenement",
-			"description": "Modèle utilisé pour les pages événement : `Evenement` (movilab.org) ou `Event` (ex. wiki.lafabriquedesmobilites.fr, extremedefi). « Modèle: » est accepté. Les paramètres sont adaptés au modèle."
+			"value": "",
+			"description": "Modèle utilisé pour les pages événement (obligatoire, pas de valeur par défaut) : `Evenement` (movilab.org) ou `Event` (ex. wiki.lafabriquedesmobilites.fr, extremedefi). « Modèle: » est accepté. Les paramètres sont adaptés au modèle."
 		},
 		"CommunecterImportDefaultSlug": {
 			"value": "",

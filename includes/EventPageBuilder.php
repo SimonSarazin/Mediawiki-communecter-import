@@ -61,7 +61,7 @@ class EventPageBuilder {
 	 */
 	public static function build( array $evt, array $options = [] ): string {
 		// Accepte « Event », « Modèle:Event » ou « Template:Event ».
-		$template = trim( preg_replace( '/^(mod[èe]le|template)\s*:/iu', '', trim( (string)( $options['template'] ?? 'Evenement' ) ) ) ) ?: 'Evenement';
+		$template = trim( preg_replace( '/^(mod[èe]le|template)\s*:/iu', '', trim( (string)( $options['template'] ?? '' ) ) ) );
 		$image = $options['image'] ?? '';
 		$ficheUrl = $options['ficheUrl'] ?? '';
 

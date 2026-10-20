@@ -12,10 +12,10 @@ Compatible MediaWiki 1.43+ (PHP 8.1+). Pour MediaWiki 1.35, voir la branche `mw-
 ```php
 wfLoadExtension( 'CommunecterImport' );
 $wgCommunecterImportSites = [ 'https://www.tiers-lieux.org', 'https://extremedefi.00.re' ]; // obligatoire
-$wgCommunecterImportTemplate = 'Event'; // ou 'Evenement'
+$wgCommunecterImportTemplate = 'Event'; // obligatoire ; ou 'Evenement'
 ```
 
-Sans `$wgCommunecterImportSites`, la page spéciale affiche un message demandant de le configurer.
+Sans `$wgCommunecterImportSites` ou sans `$wgCommunecterImportTemplate`, la page spéciale affiche un message demandant de le configurer.
 
 ## Usage
 Page `Spécial:ImportCommunecter` (droit `communecter-import`, accordé aux sysops) :
@@ -33,7 +33,7 @@ Toutes les options se règlent dans `LocalSettings.php` avec le préfixe `$wgCom
 | Option | Défaut | Rôle |
 |---|---|---|
 | `Sites` | `[]` | **À configurer.** Sites proposés dans le formulaire ; le premier est le défaut. |
-| `Template` | `Evenement` | Modèle des pages : `Evenement` (movilab.org) ou `Event` (ex. wiki.lafabriquedesmobilites.fr, ExtremeDéfi). `Modèle:Event` accepté. Les paramètres s'adaptent au modèle. |
+| `Template` | _(vide)_ | **À configurer.** Modèle des pages : `Evenement` (movilab.org) ou `Event` (ex. wiki.lafabriquedesmobilites.fr, ExtremeDéfi). `Modèle:Event` accepté. Les paramètres s'adaptent au modèle. |
 | `BaseUrl` | `https://www.communecter.org` | API Communecter (backend). |
 | `SiteUrl` | `https://www.tiers-lieux.org` | Site utilisé pour le lien si aucun n'est choisi. |
 | `DefaultSlug` | `''` | Identifiant proposé par défaut. |

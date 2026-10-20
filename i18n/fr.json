@@ -4,6 +4,7 @@
 	"communecterimport": "Importer depuis le logiciel communecter",
 	"right-communecter-import": "Importer des pages depuis le logiciel communecter",
 	"communecter-import-no-sites": "Aucun site configuré. Ajoutez dans <code>LocalSettings.php</code> : <code>$wgCommunecterImportSites = [ 'https://www.tiers-lieux.org', 'https://extremedefi.00.re' ];</code>",
+	"communecter-import-no-template": "Aucun modèle d'événement configuré. Ajoutez dans <code>LocalSettings.php</code> : <code>$wgCommunecterImportTemplate = 'Event';</code> (ou <code>'Evenement'</code>, selon le modèle de votre wiki).",
 	"communecter-import-site": "Site :",
 	"communecter-import-slug": "Identifiant de l'organisateur (profil) :",
 	"communecter-import-list": "Lister les événements",

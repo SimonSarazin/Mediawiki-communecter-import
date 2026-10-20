@@ -124,6 +124,19 @@ class SpecialCommunecterImport extends SpecialPage {
 		);
 	}
 
+	/** Lien vers la fiche publique de l'événement, pour la consulter avant import. */
+	private function viewLink( string $site, array $evt ): string {
+		$slug = (string)( $evt['slug'] ?? '' );
+		if ( !preg_match( '/^[A-Za-z0-9_.-]+$/', $slug ) ) {
+			return '';
+		}
+		return ' ' . Html::element( 'a', [
+			'href' => $site . '/profil/' . $slug,
+			'target' => '_blank',
+			'rel' => 'noopener noreferrer',
+		], $this->msg( 'communecter-import-view' )->text() );
+	}
+
 	private function eventsForm( string $slug, string $site, array $events, bool $showPast ): string {
 		$today = gmdate( 'Y-m-d' );
 		$rows = '';
@@ -139,7 +152,7 @@ class SpecialCommunecterImport extends SpecialPage {
 				: $this->msg( 'communecter-import-new' )->escaped();
 			$rows .= Html::rawElement( 'tr', [],
 				Html::rawElement( 'td', [], Html::check( 'events[]', false, [ 'value' => $id, 'id' => "cmi-$id" ] ) ) .
-				Html::rawElement( 'td', [], Html::element( 'label', [ 'for' => "cmi-$id" ], $evt['name'] ) ) .
+				Html::rawElement( 'td', [], Html::element( 'label', [ 'for' => "cmi-$id" ], $evt['name'] ) . $this->viewLink( $site, $evt ) ) .
 				Html::element( 'td', [], $day ) .
 				Html::rawElement( 'td', [], $status )
 			);

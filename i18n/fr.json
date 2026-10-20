@@ -1,8 +1,8 @@
 {
 	"@metadata": { "authors": [ "La Plume à Loup" ] },
-	"communecter-import-desc": "Importe les événements de tiers-lieux.org (Communecter) sous forme de pages wiki.",
-	"communecterimport": "Importer depuis tiers-lieux.org",
-	"right-communecter-import": "Importer des pages depuis tiers-lieux.org",
+	"communecter-import-desc": "Importe les événements du logiciel communecter sous forme de pages wiki.",
+	"communecterimport": "Importer depuis le logiciel communecter",
+	"right-communecter-import": "Importer des pages depuis le logiciel communecter",
 	"communecter-import-site": "Site :",
 	"communecter-import-slug": "Identifiant du tiers-lieu (slug) :",
 	"communecter-import-list": "Lister les événements",
@@ -21,9 +21,9 @@
 	"communecter-import-error-invalid-slug": "Identifiant de tiers-lieu invalide.",
 	"communecter-import-error-unknown-slug": "Aucun tiers-lieu ne porte cet identifiant.",
 	"communecter-import-error-invalid-id": "Identifiant d'événement invalide.",
-	"communecter-import-error-event-not-found": "Événement introuvable sur tiers-lieux.org.",
-	"communecter-import-error-unreachable": "tiers-lieux.org est injoignable.",
-	"communecter-import-error-bad-response": "Réponse inattendue de tiers-lieux.org.",
+	"communecter-import-error-event-not-found": "Événement introuvable sur communecter.",
+	"communecter-import-error-unreachable": "Communecter est injoignable.",
+	"communecter-import-error-bad-response": "Réponse inattendue de communecter.",
 	"communecter-import-error-invalid-title": "Le titre de page déduit de l'événement est invalide.",
 	"communecter-import-error-save-failed": "L'enregistrement de la page a échoué."
 }

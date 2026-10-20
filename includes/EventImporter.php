@@ -78,7 +78,7 @@ class EventImporter {
 		$updater->setContent( SlotRecord::MAIN, ContentHandler::makeContent( $text, $title ) );
 		$updater->saveRevision(
 			CommentStoreComment::newUnsavedComment(
-				$exists ? 'Mise à jour depuis tiers-lieux.org' : 'Import depuis tiers-lieux.org'
+				$exists ? 'Mise à jour depuis communecter' : 'Import depuis communecter'
 			),
 			$exists ? EDIT_UPDATE : EDIT_NEW
 		);
@@ -127,7 +127,7 @@ class EventImporter {
 			file_put_contents( $tmp, $bytes );
 			$status = $file->upload(
 				$tmp,
-				'Image de l\'événement, importée depuis tiers-lieux.org',
+				'Image de l\'événement, importée depuis communecter',
 				'',
 				0,
 				false,

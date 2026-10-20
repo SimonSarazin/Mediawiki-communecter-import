@@ -2,9 +2,8 @@
 
 namespace MediaWiki\Extension\CommunecterImport\Special;
 
-use Html;
+use MediaWiki\Html\Html;
 use MediaWiki\Config\Config;
-use Xml;
 use MediaWiki\Extension\CommunecterImport\CommunecterClient;
 use MediaWiki\Extension\CommunecterImport\CommunecterException;
 use MediaWiki\Extension\CommunecterImport\EventImporter;
@@ -12,7 +11,7 @@ use MediaWiki\Extension\CommunecterImport\EventPageBuilder;
 use MediaWiki\Http\HttpRequestFactory;
 use MediaWiki\Page\WikiPageFactory;
 use RepoGroup;
-use SpecialPage;
+use MediaWiki\SpecialPage\SpecialPage;
 
 class SpecialCommunecterImport extends SpecialPage {
 	private EventImporter $importer;
@@ -89,10 +88,18 @@ class SpecialCommunecterImport extends SpecialPage {
 		return array_values( array_unique( $clean ) ) ?: [ 'https://www.tiers-lieux.org' ];
 	}
 
+	private function siteSelect( string $site, array $sites ): string {
+		$options = '';
+		foreach ( $sites as $url ) {
+			$options .= Html::element( 'option', [ 'value' => $url, 'selected' => $url === $site ], $url );
+		}
+		return Html::rawElement( 'select', [ 'name' => 'site', 'id' => 'cmi-site' ], $options );
+	}
+
 	private function searchForm( string $slug, string $site, array $sites ): string {
 		return Html::rawElement( 'form', [ 'method' => 'get', 'action' => $this->getPageTitle()->getLocalURL() ],
 			Html::element( 'label', [ 'for' => 'cmi-site' ], $this->msg( 'communecter-import-site' )->text() ) . ' ' .
-			Xml::listDropDown( 'site', implode( "\n", $sites ), '', $site, '', '' ) . ' ' .
+			$this->siteSelect( $site, $sites ) . ' ' .
 			Html::element( 'label', [ 'for' => 'cmi-slug' ], $this->msg( 'communecter-import-slug' )->text() ) . ' ' .
 			Html::input( 'slug', $slug, 'text', [ 'id' => 'cmi-slug', 'size' => 30, 'placeholder' => 'laPlumeALoup' ] ) . ' ' .
 			Html::check( 'past', $this->getRequest()->getBool( 'past' ), [ 'id' => 'cmi-past' ] ) . ' ' .

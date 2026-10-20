@@ -2,8 +2,9 @@
 
 namespace MediaWiki\Extension\CommunecterImport;
 
-use CommentStoreComment;
-use ContentHandler;
+use MediaWiki\CommentStore\CommentStoreComment;
+use MediaWiki\Content\TextContent;
+use MediaWiki\Content\WikitextContent;
 use MediaWiki\Config\Config;
 use MediaWiki\Http\HttpRequestFactory;
 use MediaWiki\Page\WikiPageFactory;
@@ -74,11 +75,11 @@ class EventImporter {
 		$page = $this->pageFactory->newFromTitle( $title );
 		if ( $exists ) {
 			$current = $page->getContent();
-			$old = $current ? ContentHandler::getContentText( $current ) : '';
+			$old = $current instanceof TextContent ? $current->getText() : '';
 			$text = EventPageBuilder::merge( (string)$old, $text );
 		}
 		$updater = $page->newPageUpdater( $user );
-		$updater->setContent( SlotRecord::MAIN, ContentHandler::makeContent( $text, $title ) );
+		$updater->setContent( SlotRecord::MAIN, new WikitextContent( $text ) );
 		$updater->saveRevision(
 			CommentStoreComment::newUnsavedComment(
 				$exists ? 'Mise à jour depuis tiers-lieux.org' : 'Import depuis tiers-lieux.org'

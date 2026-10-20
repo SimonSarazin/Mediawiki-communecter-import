@@ -37,6 +37,10 @@
 			"value": "https://www.tiers-lieux.org",
 			"description": "Site public, utilisé pour le lien vers la fiche de l'événement."
 		},
+		"CommunecterImportSites": {
+			"value": [],
+			"description": "Sites publics proposés dans le formulaire (ex. [ \"https://www.tiers-lieux.org\", \"https://extremedefi.00.re\" ]). Le premier est le site par défaut. Obligatoire : sans valeur, la page demande de la configurer."
+		},
 		"CommunecterImportTemplate": {
 			"value": "Evenement",
 			"description": "Nom du modèle (sans « Modèle: »). `Evenement` ou `Event` : les paramètres sont adaptés."

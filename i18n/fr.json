@@ -3,6 +3,7 @@
 	"communecter-import-desc": "Importe les événements de tiers-lieux.org (Communecter) sous forme de pages wiki.",
 	"communecterimport": "Importer depuis tiers-lieux.org",
 	"right-communecter-import": "Importer des pages depuis tiers-lieux.org",
+	"communecter-import-no-sites": "Aucun site configuré. Ajoutez dans <code>LocalSettings.php</code> : <code>$wgCommunecterImportSites = [ 'https://www.tiers-lieux.org', 'https://extremedefi.00.re' ];</code>",
 	"communecter-import-site": "Site :",
 	"communecter-import-slug": "Identifiant de l'organisateur (profil) :",
 	"communecter-import-list": "Lister les événements",

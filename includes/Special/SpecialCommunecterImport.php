@@ -83,18 +83,25 @@ class SpecialCommunecterImport extends SpecialPage {
 	}
 
 	private function searchForm( string $slug, string $site ): string {
-		return Html::rawElement( 'form', [ 'method' => 'get', 'action' => $this->getPageTitle()->getLocalURL() ],
-			Html::element( 'label', [ 'for' => 'cmi-site' ], $this->msg( 'communecter-import-site' )->text() ) . ' ' .
+		$row = static function ( string $html ): string {
+			return Html::rawElement( 'p', [], $html );
+		};
+		$label = function ( string $for, string $msg ): string {
+			return Html::element( 'label', [ 'for' => $for ], $this->msg( $msg )->text() ) . ' ';
+		};
+		$siteRow = $label( 'cmi-site', 'communecter-import-site' ) .
 			Html::input( 'site', preg_replace( '#^https://#', '', $site ), 'text', [
-				'id' => 'cmi-site', 'size' => 28, 'list' => 'cmi-sites', 'placeholder' => 'tiers-lieux.org',
+				'id' => 'cmi-site', 'size' => 30, 'list' => 'cmi-sites', 'placeholder' => 'tiers-lieux.org',
 			] ) . Html::rawElement( 'datalist', [ 'id' => 'cmi-sites' ],
 				Html::element( 'option', [ 'value' => 'tiers-lieux.org' ] ) .
-				Html::element( 'option', [ 'value' => 'extremedefi.00.re' ] ) ) . ' ' .
-			Html::element( 'label', [ 'for' => 'cmi-slug' ], $this->msg( 'communecter-import-slug' )->text() ) . ' ' .
-			Html::input( 'slug', $slug, 'text', [ 'id' => 'cmi-slug', 'size' => 30, 'placeholder' => 'laPlumeALoup' ] ) . ' ' .
-			Html::check( 'past', $this->getRequest()->getBool( 'past' ), [ 'id' => 'cmi-past' ] ) . ' ' .
-			Html::element( 'label', [ 'for' => 'cmi-past' ], $this->msg( 'communecter-import-show-past' )->text() ) . ' ' .
-			Html::submitButton( $this->msg( 'communecter-import-list' )->text(), [ 'class' => 'mw-ui-button' ] )
+				Html::element( 'option', [ 'value' => 'extremedefi.00.re' ] ) );
+		$slugRow = $label( 'cmi-slug', 'communecter-import-slug' ) .
+			Html::input( 'slug', $slug, 'text', [ 'id' => 'cmi-slug', 'size' => 30, 'placeholder' => 'laPlumeALoup' ] );
+		$pastRow = Html::check( 'past', $this->getRequest()->getBool( 'past' ), [ 'id' => 'cmi-past' ] ) . ' ' .
+			$label( 'cmi-past', 'communecter-import-show-past' );
+		return Html::rawElement( 'form', [ 'method' => 'get', 'action' => $this->getPageTitle()->getLocalURL() ],
+			$row( $siteRow ) . $row( $slugRow ) . $row( $pastRow ) .
+			$row( Html::submitButton( $this->msg( 'communecter-import-list' )->text(), [ 'class' => 'mw-ui-button' ] ) )
 		);
 	}
 

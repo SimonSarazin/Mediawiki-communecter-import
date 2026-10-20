@@ -42,6 +42,3 @@ Toutes les options se règlent dans `LocalSettings.php` avec le préfixe `$wgCom
 | `Timeout` | `15` | Délai maximal d'une requête (secondes). |
 
 Les images WebP sont converties en JPEG (extension PHP GD) si `$wgFileExtensions` ne les autorise pas.
-
-## État
-Code non testé sur une instance MediaWiki : à valider avant production.

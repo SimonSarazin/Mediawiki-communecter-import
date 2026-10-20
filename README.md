@@ -17,6 +17,3 @@ Les pages existantes ne sont modifiées que si l'option est cochée (le compte-r
 ## Configuration
 `$wgCommunecterImportBaseUrl`, `SiteUrl` (site par défaut), `Sites` (liste d'autres domaines proposés dans le formulaire, ex. `[ 'https://extremedefi.00.re' ]`), `Template`, `DefaultSlug`, `ImportImages`, `UserAgent`, `Timeout`.
 Les images WebP sont converties en JPEG (GD) si `$wgFileExtensions` ne les autorise pas.
-
-## État
-Code non testé sur une instance MediaWiki : à valider avant production.

@@ -3,6 +3,7 @@
 	"communecter-import-desc": "Importe les événements de tiers-lieux.org (Communecter) sous forme de pages wiki.",
 	"communecterimport": "Importer depuis tiers-lieux.org",
 	"right-communecter-import": "Importer des pages depuis tiers-lieux.org",
+	"communecter-import-site": "Site :",
 	"communecter-import-slug": "Identifiant du tiers-lieu (slug) :",
 	"communecter-import-list": "Lister les événements",
 	"communecter-import-show-past": "Afficher aussi les événements passés",

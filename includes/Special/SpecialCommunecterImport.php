@@ -4,6 +4,7 @@ namespace MediaWiki\Extension\CommunecterImport\Special;
 
 use Html;
 use MediaWiki\Config\Config;
+use Xml;
 use MediaWiki\Extension\CommunecterImport\CommunecterClient;
 use MediaWiki\Extension\CommunecterImport\CommunecterException;
 use MediaWiki\Extension\CommunecterImport\EventImporter;
@@ -42,8 +43,13 @@ class SpecialCommunecterImport extends SpecialPage {
 		$request = $this->getRequest();
 		$out->addModuleStyles( [ 'mediawiki.ui.button' ] );
 
+		$sites = $this->sites();
+		$site = $request->getVal( 'site', $sites[0] );
+		if ( !in_array( $site, $sites, true ) ) {
+			$site = $sites[0];
+		}
 		$slug = trim( $request->getText( 'slug', (string)$this->config->get( 'CommunecterImportDefaultSlug' ) ) );
-		$out->addHTML( $this->searchForm( $slug ) );
+		$out->addHTML( $this->searchForm( $slug, $site, $sites ) );
 		if ( $slug === '' ) {
 			return;
 		}
@@ -53,11 +59,11 @@ class SpecialCommunecterImport extends SpecialPage {
 				if ( !$this->getUser()->matchEditToken( $request->getVal( 'token' ) ) ) {
 					$out->addHTML( Html::errorBox( $this->msg( 'sessionfailure' )->escaped() ) );
 				} else {
-					$this->runImport( $request->getArray( 'events', [] ), $request->getBool( 'update' ) );
+					$this->runImport( $request->getArray( 'events', [] ), $request->getBool( 'update' ), $site );
 				}
 			}
 			$events = $this->importer->getClient()->listEvents( $slug );
-			$out->addHTML( $this->eventsForm( $slug, $events, $request->getBool( 'past' ) ) );
+			$out->addHTML( $this->eventsForm( $slug, $site, $events, $request->getBool( 'past' ) ) );
 		} catch ( CommunecterException $e ) {
 			$out->addHTML( Html::errorBox( $this->msg( 'communecter-import-error-' . $e->getMessage() )->escaped() ) );
 		}
@@ -67,8 +73,26 @@ class SpecialCommunecterImport extends SpecialPage {
 		return 'pagetools';
 	}
 
-	private function searchForm( string $slug ): string {
+	/** Sites publics autorisés : le premier est celui par défaut. */
+	private function sites(): array {
+		$list = array_merge(
+			[ (string)$this->config->get( 'CommunecterImportSiteUrl' ) ],
+			(array)$this->config->get( 'CommunecterImportSites' )
+		);
+		$clean = [];
+		foreach ( $list as $url ) {
+			$url = rtrim( (string)$url, '/' );
+			if ( preg_match( '#^https://[A-Za-z0-9.-]+(:\d+)?$#', $url ) ) {
+				$clean[] = $url;
+			}
+		}
+		return array_values( array_unique( $clean ) ) ?: [ 'https://www.tiers-lieux.org' ];
+	}
+
+	private function searchForm( string $slug, string $site, array $sites ): string {
 		return Html::rawElement( 'form', [ 'method' => 'get', 'action' => $this->getPageTitle()->getLocalURL() ],
+			Html::element( 'label', [ 'for' => 'cmi-site' ], $this->msg( 'communecter-import-site' )->text() ) . ' ' .
+			Xml::listDropDown( 'site', implode( "\n", $sites ), '', $site, '', '' ) . ' ' .
 			Html::element( 'label', [ 'for' => 'cmi-slug' ], $this->msg( 'communecter-import-slug' )->text() ) . ' ' .
 			Html::input( 'slug', $slug, 'text', [ 'id' => 'cmi-slug', 'size' => 30, 'placeholder' => 'laPlumeALoup' ] ) . ' ' .
 			Html::check( 'past', $this->getRequest()->getBool( 'past' ), [ 'id' => 'cmi-past' ] ) . ' ' .
@@ -77,7 +101,7 @@ class SpecialCommunecterImport extends SpecialPage {
 		);
 	}
 
-	private function eventsForm( string $slug, array $events, bool $showPast ): string {
+	private function eventsForm( string $slug, string $site, array $events, bool $showPast ): string {
 		$today = gmdate( 'Y-m-d' );
 		$rows = '';
 		foreach ( $events as $id => $evt ) {
@@ -109,6 +133,7 @@ class SpecialCommunecterImport extends SpecialPage {
 		);
 		return Html::rawElement( 'form', [ 'method' => 'post', 'action' => $this->getPageTitle()->getLocalURL() ],
 			Html::hidden( 'slug', $slug ) .
+			Html::hidden( 'site', $site ) .
 			Html::hidden( 'past', $showPast ? '1' : '' ) .
 			Html::hidden( 'token', $this->getUser()->getEditToken() ) .
 			Html::rawElement( 'table', [ 'class' => 'wikitable' ], $head . $rows ) .
@@ -122,7 +147,7 @@ class SpecialCommunecterImport extends SpecialPage {
 		);
 	}
 
-	private function runImport( array $ids, bool $update ): void {
+	private function runImport( array $ids, bool $update, string $site ): void {
 		$out = $this->getOutput();
 		$items = '';
 		foreach ( array_unique( array_filter( $ids, 'is_string' ) ) as $id ) {
@@ -130,7 +155,7 @@ class SpecialCommunecterImport extends SpecialPage {
 				continue;
 			}
 			try {
-				[ $result, $title ] = $this->importer->import( $id, $this->getUser(), $update );
+				[ $result, $title ] = $this->importer->import( $id, $this->getUser(), $update, $site );
 				$link = $this->getLinkRenderer()->makeKnownLink( $title );
 				$items .= Html::rawElement( 'li', [], $this->msg( 'communecter-import-result-' . $result )->rawParams( $link )->escaped() );
 			} catch ( CommunecterException $e ) {

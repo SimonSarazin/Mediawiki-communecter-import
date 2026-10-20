@@ -49,7 +49,7 @@ class EventImporter {
 	/**
 	 * @return array{0:string,1:Title} [ résultat, titre ]
 	 */
-	public function import( string $eventId, UserIdentity $user, bool $update ): array {
+	public function import( string $eventId, UserIdentity $user, bool $update, string $siteUrl = '' ): array {
 		// Le contenu vient toujours de Communecter, jamais de la requête du navigateur.
 		$evt = $this->client->getEvent( $eventId );
 		$title = self::titleFor( $evt );
@@ -68,7 +68,7 @@ class EventImporter {
 		$text = EventPageBuilder::build( $evt, [
 			'template' => $this->config->get( 'CommunecterImportTemplate' ),
 			'image' => $image,
-			'ficheUrl' => $this->ficheUrl( $evt ),
+			'ficheUrl' => $this->ficheUrl( $evt, $siteUrl ),
 		] );
 
 		$page = $this->pageFactory->newFromTitle( $title );
@@ -91,12 +91,12 @@ class EventImporter {
 		return [ $exists ? self::UPDATED : self::CREATED, $title ];
 	}
 
-	private function ficheUrl( array $evt ): string {
+	private function ficheUrl( array $evt, string $siteUrl ): string {
 		$slug = (string)( $evt['slug'] ?? '' );
 		if ( !preg_match( '/^[A-Za-z0-9_.-]+$/', $slug ) ) {
 			return '';
 		}
-		return rtrim( (string)$this->config->get( 'CommunecterImportSiteUrl' ), '/' ) . '/profil/' . $slug;
+		return rtrim( $siteUrl !== '' ? $siteUrl : (string)$this->config->get( 'CommunecterImportSiteUrl' ), '/' ) . '/profil/' . $slug;
 	}
 
 	/**

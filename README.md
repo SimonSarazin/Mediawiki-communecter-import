@@ -4,7 +4,7 @@ Importe les événements d'un lieu de tiers-lieux.org (API Communecter) et crée
 une page wiki par événement, avec image et description.
 
 ## Installation
-Copier le dossier dans `extensions/CommunecterImport`, puis dans `LocalSettings.php` :
+Compatible MediaWiki 1.35+ (PHP 7.3+). Copier le dossier dans `extensions/CommunecterImport`, puis dans `LocalSettings.php` :
 
     wfLoadExtension( 'CommunecterImport' );
     $wgCommunecterImportTemplate = 'Evenement'; // ou 'Event'

@@ -4,12 +4,12 @@ namespace MediaWiki\Extension\CommunecterImport;
 
 use CommentStoreComment;
 use ContentHandler;
-use MediaWiki\Config\Config;
 use MediaWiki\Http\HttpRequestFactory;
-use MediaWiki\Page\WikiPageFactory;
 use MediaWiki\Revision\SlotRecord;
-use MediaWiki\Title\Title;
-use MediaWiki\User\UserIdentity;
+use Config;
+use Title;
+use User;
+use WikiPage;
 use RepoGroup;
 
 /**
@@ -20,19 +20,16 @@ class EventImporter {
 	public const UPDATED = 'updated';
 	public const SKIPPED = 'skipped';
 
-	private CommunecterClient $client;
-	private WikiPageFactory $pageFactory;
-	private RepoGroup $repoGroup;
-	private Config $config;
+	private $client;
+	private $repoGroup;
+	private $config;
 
 	public function __construct(
 		CommunecterClient $client,
-		WikiPageFactory $pageFactory,
 		RepoGroup $repoGroup,
 		Config $config
 	) {
 		$this->client = $client;
-		$this->pageFactory = $pageFactory;
 		$this->repoGroup = $repoGroup;
 		$this->config = $config;
 	}
@@ -49,11 +46,11 @@ class EventImporter {
 	/**
 	 * @return array{0:string,1:Title} [ résultat, titre ]
 	 */
-	public function import( string $eventId, UserIdentity $user, bool $update ): array {
+	public function import( string $eventId, User $user, bool $update ): array {
 		// Le contenu vient toujours de Communecter, jamais de la requête du navigateur.
 		$evt = $this->client->getEvent( $eventId );
 		$title = self::titleFor( $evt );
-		if ( !$title || !$title->canExist() ) {
+		if ( !$title || $title->getNamespace() < 0 ) {
 			throw new CommunecterException( 'invalid-title' );
 		}
 		$exists = $title->exists();
@@ -71,7 +68,7 @@ class EventImporter {
 			'ficheUrl' => $this->ficheUrl( $evt ),
 		] );
 
-		$page = $this->pageFactory->newFromTitle( $title );
+		$page = WikiPage::factory( $title );
 		if ( $exists ) {
 			$current = $page->getContent();
 			$old = $current ? ContentHandler::getContentText( $current ) : '';
@@ -104,7 +101,7 @@ class EventImporter {
 	 *
 	 * @return string Nom du fichier sur le wiki, ou '' sans image
 	 */
-	private function uploadImage( array $evt, UserIdentity $user ): string {
+	private function uploadImage( array $evt, User $user ): string {
 		$path = (string)( $evt['profilImageUrl'] ?? '' );
 		$downloaded = $this->client->downloadImage( $path );
 		if ( !$downloaded ) {

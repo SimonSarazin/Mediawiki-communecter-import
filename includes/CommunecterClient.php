@@ -12,10 +12,10 @@ class CommunecterClient {
 	private const SLUG_PATTERN = '/^[A-Za-z0-9_.-]{1,100}$/';
 	private const IMAGE_MAX_BYTES = 9 * 1024 * 1024;
 
-	private HttpRequestFactory $http;
-	private string $baseUrl;
-	private string $userAgent;
-	private int $timeout;
+	private $http;
+	private $baseUrl;
+	private $userAgent;
+	private $timeout;
 
 	public function __construct( HttpRequestFactory $http, string $baseUrl, string $userAgent, int $timeout = 15 ) {
 		$this->http = $http;

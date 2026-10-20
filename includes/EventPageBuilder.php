@@ -133,13 +133,13 @@ class EventPageBuilder {
 		if ( !preg_match( $template, $new, $newTemplate ) ) {
 			return $existing;
 		}
-		$text = preg_replace_callback( $template, static fn () => $newTemplate[0], $existing, 1 );
+		$text = preg_replace_callback( $template, static function () use ( $newTemplate ) { return $newTemplate[0]; }, $existing, 1 );
 		preg_match( $description, $new, $section );
 		$section = $section[0] ?? '';
 		if ( preg_match( $description, $text ) ) {
-			$text = preg_replace_callback( $description, static fn () => $section, $text, 1 );
+			$text = preg_replace_callback( $description, static function () use ( $section ) { return $section; }, $text, 1 );
 		} elseif ( $section !== '' ) {
-			$text = preg_replace_callback( '/\n== Compte-rendu ==/', static fn () => "\n$section\n\n== Compte-rendu ==", $text, 1 );
+			$text = preg_replace_callback( '/\n== Compte-rendu ==/', static function () use ( $section ) { return "\n$section\n\n== Compte-rendu =="; }, $text, 1 );
 		}
 		return $text;
 	}

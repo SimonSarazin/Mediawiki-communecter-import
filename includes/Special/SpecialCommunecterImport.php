@@ -3,23 +3,21 @@
 namespace MediaWiki\Extension\CommunecterImport\Special;
 
 use Html;
-use MediaWiki\Config\Config;
+use Config;
 use MediaWiki\Extension\CommunecterImport\CommunecterClient;
 use MediaWiki\Extension\CommunecterImport\CommunecterException;
 use MediaWiki\Extension\CommunecterImport\EventImporter;
 use MediaWiki\Extension\CommunecterImport\EventPageBuilder;
 use MediaWiki\Http\HttpRequestFactory;
-use MediaWiki\Page\WikiPageFactory;
 use RepoGroup;
 use SpecialPage;
 
 class SpecialCommunecterImport extends SpecialPage {
-	private EventImporter $importer;
-	private Config $config;
+	private $importer;
+	private $config;
 
 	public function __construct(
 		HttpRequestFactory $http,
-		WikiPageFactory $pageFactory,
 		RepoGroup $repoGroup,
 		Config $config
 	) {
@@ -31,13 +29,13 @@ class SpecialCommunecterImport extends SpecialPage {
 			$config->get( 'CommunecterImportUserAgent' ),
 			(int)$config->get( 'CommunecterImportTimeout' )
 		);
-		$this->importer = new EventImporter( $client, $pageFactory, $repoGroup, $config );
+		$this->importer = new EventImporter( $client, $repoGroup, $config );
 	}
 
 	public function execute( $subPage ) {
 		$this->setHeaders();
 		$this->checkPermissions();
-		$this->requireNamedUser();
+		$this->requireLogin();
 		$out = $this->getOutput();
 		$request = $this->getRequest();
 		$out->addModuleStyles( [ 'mediawiki.ui.button' ] );

@@ -7,7 +7,7 @@
 	"license-name": "GPL-2.0-or-later",
 	"type": "specialpage",
 	"requires": {
-		"MediaWiki": ">= 1.39.0"
+		"MediaWiki": ">= 1.35.0"
 	},
 	"AvailableRights": [ "communecter-import" ],
 	"GroupPermissions": {
@@ -16,7 +16,7 @@
 	"SpecialPages": {
 		"CommunecterImport": {
 			"class": "MediaWiki\\Extension\\CommunecterImport\\Special\\SpecialCommunecterImport",
-			"services": [ "HttpRequestFactory", "WikiPageFactory", "RepoGroup", "MainConfig" ]
+			"services": [ "HttpRequestFactory", "RepoGroup", "MainConfig" ]
 		}
 	},
 	"AutoloadNamespaces": {
